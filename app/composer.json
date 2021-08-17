@@ -1,0 +1,15 @@
+{
+    "name": "app/catch",
+    "require": {
+    	"guzzlehttp/guzzle": "~6.3",
+        "illuminate/database": "~5.5",
+        "illuminate/events": "~5.5",
+        "sunra/php-simple-html-dom-parser": "~1.5"
+    },
+    "autoload" : {
+        "files": [
+            "Helper.php",
+            "Queue.php"
+        ]
+    }
+}
