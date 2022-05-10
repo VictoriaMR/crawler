@@ -99,13 +99,13 @@ class Robot
         $data5 = array_count_values(array_column($data, 'num5'));
         $data6 = array_count_values(array_column($data, 'num6'));
         $data7 = array_count_values(array_column($data, 'num7'));
-        asort($data1);
-        asort($data2);
-        asort($data3);
-        asort($data4);
-        asort($data5);
-        asort($data6);
-        asort($data7);
+        arsort($data1);
+        arsort($data2);
+        arsort($data3);
+        arsort($data4);
+        arsort($data5);
+        arsort($data6);
+        arsort($data7);
         print_r($data1);
         print_r($data2);
         print_r($data3);
@@ -113,6 +113,7 @@ class Robot
         print_r($data5);
         print_r($data6);
         print_r($data7);
+        dd();
         $rate = (sqrt(5) - 1) / 2;
         // $rate = 0.8;
         $result = [];
@@ -122,60 +123,33 @@ class Robot
             $data3,
             $data4,
             $data5,
-            $data6,
-            $data7,
         ];
+        $inM = [4, 6, 8, 14, 16];
         foreach ($data as $key => $value) {
-            $tempstr = 'data'.($key + 1);
-            $$tempstr = [];
-            $tmpArr = array_keys($value);
-            $$tempstr[] = end($tmpArr);
-            reset($tmpArr);
-            $count = count($value);
-            $num1 = floor($count * $rate);
-            $num2 = ceil($count * $rate);
-            $i = 1;
-            $prev = '';
-            foreach ($value as $k => $v) {
-                if ($v >= 100) {
-                    $$tempstr[] = $k;
-                    $$tempstr[] = $prev;
-                    break;
+            $count = 1;
+            foreach ($value as $k=>$v) {
+                $searchKey = array_search($count, $inM);
+                if ($searchKey !== false) {
+                    $saveKey = 'result'.$searchKey;
+                    if (!isset($$saveKey)) $$saveKey = [];
+                    $$saveKey[] = $k;
                 }
-                $prev = $k;
-            }
-            foreach ($value as $k => $v) {
-                if ($i == $num1 || $i == $num2) {
-                    $$tempstr[] = $k;
-                }
-                $i++;
+                $count ++;
             }
         }
         $data = [
-            $data1,
-            $data2,
-            $data3,
-            $data4,
-            $data5,
-            $data6,
-            $data7,
+            $result0,
+            $result1,
+            $result2,
+            $result3,
+            $result4,
         ];
-        $i = 0;
-        while ( $i <= 4) {
-            $tempArr = [];
-            foreach ($data as $key => $value) {
-                if ($key > 4) break;
-                $tempArr[] = $value[$i];
+        foreach ($data as $key => $value) {
+            asort($value);
+            foreach ($value as $k=>$v) {
+                echo $v. ' ';
             }
-            sort($tempArr);
-            $temp2Arr = [];
-            foreach ($data as $key => $value) {
-                if ($key <= 4) continue;;
-                $temp2Arr[] = $value[$i];
-            }
-            sort($temp2Arr);
-            echo implode(' ', array_merge($tempArr, $temp2Arr)).PHP_EOL;
-            $i ++;
+            echo PHP_EOL;
         }
         dd();
         return false;
